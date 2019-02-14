@@ -1,0 +1,50 @@
+
+load_file("nrngui.hoc")
+load_file("CalciumWave_Edited.hoc") //load_file("CalciumWave.hoc")
+forall{
+	ip3i0=  0.16e-3  //  baseline value
+	ip3i0_ip3dif=ip3i0
+    }
+tstop= 3*1000 + 20 // 90020
+steps_per_ms = 20
+dt = 0.05
+AddSynapse()
+
+/**********************************************************************/
+
+
+
+
+objectvar g[20]         // max 20 graphs
+ngraph = 0
+
+proc addgraph() {  // define subroutine to add a new graph
+                // addgraph("variable", minvalue, maxvalue)
+    ngraph = ngraph+1
+    ii = ngraph-1
+    g[ii] = new Graph()
+    g[ii].size(0,tstop,$2,$3)
+    g[ii].xaxis()
+    g[ii].yaxis()
+    g[ii].addvar($s1,1,0)
+    g[ii].save_name("graphList[0].")
+    graphList[0].append(g[ii])
+}
+
+if(ismenu==0) {
+  nrnmainmenu()         // create main menu
+  nrncontrolmenu()      // create control menu
+  ismenu=1
+
+
+addgraph("apical[112].ip3i (0.5)",0.16e-3,4e-3)
+addgraph("apical[112].cai (0.5)",5e-5,0.8e-3)
+addgraph("apical[112].jip3_cal4 (0.5)",0,2e-5)
+addgraph("ampa[0].w",0,1)
+
+
+
+}
+
+
+ 
