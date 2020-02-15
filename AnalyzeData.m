@@ -1,4 +1,4 @@
-function [v,p] = AnalyzeData(GeneSetWeights,GeneSetNames,Method,LocFile,RankFile)
+function [v,p] = AnalyzeData(GeneSetWeights,GeneSetNames,Method,LocFile,RankFile,CorrFile)
 % Apply weighted gene set analysis to given geneset
 % Input:  
 %           GeneSetNames   = m-by-1 cell of names of gene in gene set
@@ -6,12 +6,13 @@ function [v,p] = AnalyzeData(GeneSetWeights,GeneSetNames,Method,LocFile,RankFile
 %           Method         = 'Monte Carlo' or 'Normal'
 %           LocFile        = file name of gene location data
 %           RankFile       = file name of gene rank data
+%           CorrFile       = file name of gene correlation data
 
 % Load gene location data
-GeneLoc   = readtable(LocFile);
+GeneLoc   = readtable(LocFile,'FileType','text');
 
 % Load gene rank data
-GeneRank  = readtable(RankFile);
+GeneRank  = readtable(RankFile,'FileType','text');
 
 %--------------------------------------------------------------------------
 % Find id of gene names
@@ -67,7 +68,6 @@ if sum(GeneSetWeights) ~=0
     GeneSetWeights = GeneSetWeights / sum( GeneSetWeights );
 end
 
-
 %--------------------------------------------------------------------------
 
 % Sort P-values from gene-level analysis
@@ -80,4 +80,15 @@ n        = length(P);
 % Get ranks of genes in gene set
 [~,GeneSetRanks] = ismember( GeneSetIX , IX ); 
 v                = GeneSetRanks(:)'*GeneSetWeights(:);  % Statistic
-p                = WeightedGSTest(v,GeneSetWeights,n,Method); 
+    
+
+% Add in correlation matrix
+if nargin == 5
+    p                = WeightedGSTest(v,GeneSetWeights,n,Method); 
+else
+    % Load correlation matrix
+    R = CorrelationMatrix(CorrFile);
+    p = WeightedGSTest(v,GeneSetWeights,n,Method,R,GeneSetIX); 
+end
+    
+end
