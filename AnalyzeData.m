@@ -68,6 +68,7 @@ if sum(GeneSetWeights) ~=0
     GeneSetWeights = GeneSetWeights / sum( GeneSetWeights );
 end
 
+
 %--------------------------------------------------------------------------
 
 % Sort P-values from gene-level analysis
@@ -86,9 +87,7 @@ v                = GeneSetRanks(:)'*GeneSetWeights(:);  % Statistic
 if nargin == 5
     p                = WeightedGSTest(v,GeneSetWeights,n,Method); 
 else
-    % Load correlation matrix
+    % Load correlation data
     R = CorrelationMatrix(CorrFile);
     p = WeightedGSTest(v,GeneSetWeights,n,Method,R,GeneSetIX); 
-end
-    
 end
