@@ -3,7 +3,7 @@ function [v,p] = AnalyzeData(GeneSetWeights,GeneSetNames,Method,LocFile,RankFile
 % Input:  
 %           GeneSetNames   = m-by-1 cell of names of gene in gene set
 %           GeneSetWeights = m-by-1 vector of respective weights in gene set 
-%           Method         = 'Monte Carlo' or 'Normal'
+%           Method         = 'Monte Carlo' or 'Normal' or 'Correlation'
 %           LocFile        = file name of gene location data
 %           RankFile       = file name of gene rank data
 %           CorrFile       = file name of gene correlation data
@@ -88,6 +88,10 @@ if nargin == 5
     p                = WeightedGSTest(v,GeneSetWeights,n,Method); 
 else
     % Load correlation data
-    R = CorrelationMatrix(CorrFile);
+    %R = CorrelationMatrix(CorrFile);
+    %save('R','R')
+    
+    
+    load('R')
     p = WeightedGSTest(v,GeneSetWeights,n,Method,R,GeneSetIX); 
 end

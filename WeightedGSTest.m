@@ -15,10 +15,14 @@ w         = w(:);
 par.v     = v;
 par.tol   = 10^(-6);                % tolerance
 
-% Correlation matrix
-if nargin > 3 && ~strcmp(approach,'Correlation')
-    disp('Gene correlation matrix is only used for Monte Carlo approach. \n')
-    disp('Ignoring gene correlation matrix. \n')
+% Warning messages
+if nargin > 5 && ~strcmp(approach,'Correlation')
+    disp('Warning: Gene correlation matrix is only used for Correlation approach.')
+    disp('Ignoring correlation matrix.')
+elseif nargin <= 5 && strcmp(approach,'Correlation')
+    disp('Warning: Gene correlation matrix is needed for Correlation approach.')
+    disp('Using Monte Carlo approach instead.')
+    approach = 'Monte Carlo';
 end
 
 % Two approaches to estimate one-sided p-value
@@ -32,8 +36,8 @@ switch approach
         sig2 = sum(w(:).^2)*(n^2-1)/12;
         p    = normcdf( (v-mu)/sqrt(sig2) );
     case 'Correlation'
-        par.tol   = 10^(-2);                % higher tolerance b/c of slower computation
-        par.minit = 5*10^6;                 % lower min iteration b/c of slower computation
+        par.tol   = 10^(-3);                % higher tolerance b/c of slower computation
+        par.minit = 10^6;                   % lower min iteration b/c of slower computation
         conv      = CorrelationApproach(w,par,R,GeneSetIX); 
         p         = conv(end);
 end
@@ -51,10 +55,10 @@ while it <= par.minit || abs(conv(it-1)-conv(it-2))/conv(it-2) > par.tol
     ix = randperm(par.n,par.m);
     
     % Estimate weighted average; count if more extreme than x            
-    cnt  = cnt + sum(ix'*w <= par.v);           
+    cnt  = cnt + sum(ix*w <= par.v);           
 
     % Update iteration
-    it = it + batch;    
+    it = it + 1;    
    
     % Running convergence
     conv(it,1) = cnt/it;
@@ -69,7 +73,6 @@ it    = 0;
 cnt   = 0;
 V     = chol(R)';
 batch = 10^4;
-
 
 while it <= par.minit || abs(conv(it/batch)-conv(it/batch-1)) > par.tol
 
