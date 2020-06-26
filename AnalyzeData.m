@@ -88,10 +88,6 @@ if nargin == 5
     p                = WeightedGSTest(v,GeneSetWeights,n,Method); 
 else
     % Load correlation data
-    %R = CorrelationMatrix(CorrFile);
-    %save('R','R')
-    
-    
-    load('R')
+    R = CorrelationMatrix(CorrFile);
     p = WeightedGSTest(v,GeneSetWeights,n,Method,R,GeneSetIX); 
 end
