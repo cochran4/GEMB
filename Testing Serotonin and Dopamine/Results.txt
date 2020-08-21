@@ -1,0 +1,52 @@
+ExtracellularDopamine('Monte Carlo','Ranks_BP.txt','Locations.txt');
+Warning: the following gene names are not in the gene rank file....
+     MAOA
+     MAOB
+Removing these genes from subsequent analysis.
+Normalizing weights ...
+Number of genes: 18198
+Dopamine model:             0.713
+ExtracellularDopamine('Monte Carlo','Ranks_SCZ.txt','Locations.txt');
+Warning: the following gene names are not in the gene rank file....
+     MAOA
+     MAOB
+Removing these genes from subsequent analysis.
+Normalizing weights ...
+Number of genes: 18155
+Dopamine model:             0.978
+ExtracellularDopamine('Monte Carlo','Ranks_MDD.txt','Locations.txt');
+Warning: the following gene names are not in the gene rank file....
+     MAOA
+     MAOB
+Removing these genes from subsequent analysis.
+Normalizing weights ...
+Number of genes: 17982
+Dopamine model:             0.859
+
+
+
+
+ExtracellularSerotonin('Monte Carlo','Ranks_BP.txt','Locations.txt');
+ExtracellularSerotonin('Monte Carlo','Ranks_SCZ.txt','Locations.txt');
+ExtracellularSerotonin('Monte Carlo','Ranks_MDD.txt','Locations.txt');
+Warning: the following gene names are not in the gene rank file....
+     MAOA
+     MAOB
+Removing these genes from subsequent analysis.
+Normalizing weights ...
+Number of genes: 18198
+Serotonin model:             0.109
+Warning: the following gene names are not in the gene rank file....
+     MAOA
+     MAOB
+Removing these genes from subsequent analysis.
+Normalizing weights ...
+Number of genes: 18155
+Serotonin model:             0.583
+Warning: the following gene names are not in the gene rank file....
+     MAOA
+     MAOB
+Removing these genes from subsequent analysis.
+Normalizing weights ...
+Number of genes: 17982
+Serotonin model:             0.788
